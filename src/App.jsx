@@ -11,15 +11,11 @@ function App() {
   }, []);
 
   const apiTesting = () => {
-    fetchDataFromApi("/movie/popular")
-      .then(function (response) {
-        // handle success
-        console.log(response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    fetchDataFromApi("/movie/popular").then((res) => {
+      // handle success
+      console.log(res);
+      dispatch(getApiConfiguration(res));
+    });
   };
   return <>App </>;
 }
