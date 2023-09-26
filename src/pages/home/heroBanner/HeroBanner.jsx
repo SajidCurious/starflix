@@ -7,6 +7,8 @@ const HeroBanner = () => {
   const [background, setBackground] = useState("");
   const [query, setQuery] = useState("");
 
+  const searchQueryHandler = () => {};
+
   return (
     <div className="heroBanner">
       <div className="wrapper">
@@ -19,6 +21,10 @@ const HeroBanner = () => {
             <input
               type="text"
               placeholder="Search for a movie or tv show...."
+              onKeyUp={searchQueryHandler}
+              onChange={(e) => {
+                setQuery(e.target.value);
+              }}
             />
             <button>Search</button>
           </div>
