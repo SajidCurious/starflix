@@ -18,7 +18,22 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  return <div></div>;
+  return (
+    <header className="header">
+      <ContentWrapper>
+        <div className="logo">
+          <img src={logo} alt="logo" />
+        </div>
+        <ul className="menuItems">
+          <li className="menuItem">Movies</li>
+          <li className="menuItem">TV Shows</li>
+          <li className="menuItem">
+            <HiOutlineSearch />
+          </li>
+        </ul>
+      </ContentWrapper>
+    </header>
+  );
 };
 
 export default Header;
