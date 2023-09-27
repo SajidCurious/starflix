@@ -15,16 +15,23 @@ import PageNotFound from "./pages/404/PageNotFound";
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
+  console.log(url);
 
   useEffect(() => {
-    apiTesting();
+    fetchApiConfig();
   }, []);
 
-  const apiTesting = () => {
-    fetchDataFromApi("/movie/popular").then((res) => {
+  const fetchApiConfig = () => {
+    fetchDataFromApi("/configuration").then((res) => {
       // handle success
       console.log(res);
-      dispatch(getApiConfiguration(res));
+
+      const url = {
+        backdrop: res.images.secure_base_url + "original",
+        poster: res.images.secure_base_url + "original",
+        profile: res.images.secure_base_url + "original",
+      };
+      dispatch(getApiConfiguration(url));
     });
   };
   return (
