@@ -21,9 +21,7 @@ const Header = () => {
   return (
     <header className="header">
       <ContentWrapper>
-        <div className="logo">
-          <img src={logo} alt="logo" />
-        </div>
+        <div className="logo">STARFLIX</div>
         <ul className="menuItems">
           <li className="menuItem">Movies</li>
           <li className="menuItem">TV Shows</li>
