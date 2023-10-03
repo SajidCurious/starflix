@@ -21,7 +21,7 @@ const Header = () => {
   return (
     <header className="header">
       <ContentWrapper>
-        <div className="logo">STARFLIX</div>
+        <div className="text-white">STARFLIX</div>
         <ul className="menuItems">
           <li className="menuItem">Movies</li>
           <li className="menuItem">TV Shows</li>
