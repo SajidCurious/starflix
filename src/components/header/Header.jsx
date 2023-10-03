@@ -18,10 +18,20 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const openSearch = () => {
+    setMobileMenu(false);
+    setShowSearch(true);
+  };
+
+  const openMobileMenu = () => {
+    setMobileMenu(true);
+    setShowSearch(false);
+  };
+
   return (
-    <header className="header">
+    <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
-        <div className="text-white">STARFLIX</div>
+        <div className="text-white font-bold text-2xl">STARFLIX</div>
         <ul className="menuItems">
           <li className="menuItem">Movies</li>
           <li className="menuItem">TV Shows</li>
@@ -29,6 +39,14 @@ const Header = () => {
             <HiOutlineSearch />
           </li>
         </ul>
+        <div className="mobileMenuItems">
+          <HiOutlineSearch onClick={openSearch} />
+          {mobileMenu ? (
+            <VscChromeClose onClick={() => setMobileMenu(false)} />
+          ) : (
+            <SlMenu onClick={openMobileMenu} />
+          )}
+        </div>
       </ContentWrapper>
     </header>
   );
