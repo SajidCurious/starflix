@@ -18,6 +18,14 @@ const Header = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const searchQueryHandler = (event) => {
+    if (event.key === "Enter" && query.length > 0) {
+      navigate(`/search/${query}`);
+      setTimeout(() => {
+        setShowSearch(false);
+      }, 1000);
+    }
+  };
   const openSearch = () => {
     setMobileMenu(false);
     setShowSearch(true);
@@ -36,7 +44,7 @@ const Header = () => {
           <li className="menuItem">Movies</li>
           <li className="menuItem">TV Shows</li>
           <li className="menuItem">
-            <HiOutlineSearch />
+            <HiOutlineSearch onClick={openSearch} />
           </li>
         </ul>
         <div className="mobileMenuItems">
@@ -48,6 +56,21 @@ const Header = () => {
           )}
         </div>
       </ContentWrapper>
+      {showSearch && (
+        <div className="searchBar">
+          <ContentWrapper>
+            <div className="searchInput">
+              <input
+                type="text"
+                placeholder="Search for a movie or tv show...."
+                onChange={(e) => setQuery(e.target.value)}
+                onKeyUp={searchQueryHandler}
+              />
+              <VscChromeClose onClick={() => setShowSearch(false)} />
+            </div>
+          </ContentWrapper>
+        </div>
+      )}
     </header>
   );
 };
