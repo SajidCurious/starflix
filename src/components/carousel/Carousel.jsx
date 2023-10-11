@@ -9,11 +9,11 @@ import dayjs from "dayjs";
 
 import ContentWrapper from "../contentWrapper/ContentWrapper";
 import PosterFallback from "../../assets/no-poster.png";
-// import CircleRating from "../circleRating/CircleRating";
-// import Genres from "../genres/Genres";
 
 import "./style.scss";
 import Img from "../lazyLoadImages/img";
+import Genres from "../genres/Genres";
+import CircleRating from "../circleRating/CircleRating";
 
 const Carousel = ({ data, loading, endpoint, title }) => {
   const carouselContainer = useRef();
