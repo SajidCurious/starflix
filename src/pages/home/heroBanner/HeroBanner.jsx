@@ -40,7 +40,7 @@ const HeroBanner = () => {
           <span className="subTitle">
             Millions of movies, TV shows and people to discover. Explore now.
           </span>
-          <div className="searchInput">
+          <div className="searchInput text-black">
             <input
               type="text"
               placeholder="Search for a movie or tv show...."
