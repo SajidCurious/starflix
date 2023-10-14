@@ -12,7 +12,7 @@ import CircleRating from "../../../components/circleRating/CircleRating";
 import PosterFallback from "../../../assets/no-poster.png";
 import VideoPopup from "../../../components/videoPopup/VideoPopup";
 import { PlayIcon } from "../Playbtn";
-import Img from "../../../components/lazyLoadImages/img";
+import Img from "../../../components/lazyLoadImages/LazyImg";
 const DetailsBanner = ({ video, crew }) => {
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);

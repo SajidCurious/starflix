@@ -7,7 +7,7 @@ import "./style.scss";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/no-poster.png";
-import Img from "../lazyLoadImages/img";
+import Img from "../lazyLoadImages/LazyImg";
 const MovieCard = ({ data, fromSearch, mediaType }) => {
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
