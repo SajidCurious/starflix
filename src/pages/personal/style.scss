@@ -1,0 +1,531 @@
+@import "../../mixins.scss";
+
+.personalPage {
+    min-height: 100vh;
+    background: var(--black1);
+    padding-top: 80px;
+
+    .personalHeader {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 30px;
+
+        .backBtn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateX(-2px);
+            }
+
+            svg {
+                font-size: 16px;
+            }
+        }
+
+        h1 {
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0;
+        }
+    }
+
+    .personalContent {
+        .tabsContainer {
+            margin-bottom: 30px;
+
+            .tabs {
+                display: flex;
+                gap: 10px;
+                background: rgba(255, 255, 255, 0.1);
+                padding: 5px;
+                border-radius: 12px;
+                width: fit-content;
+
+                .tab {
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: transparent;
+                    border: none;
+                    color: rgba(255, 255, 255, 0.7);
+                    padding: 12px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    font-size: 14px;
+                    font-weight: 500;
+
+                    &:hover {
+                        color: white;
+                        background: rgba(255, 255, 255, 0.1);
+                    }
+
+                    &.active {
+                        background: var(--pink);
+                        color: white;
+                        transform: translateY(-1px);
+                    }
+
+                    svg {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+
+        .tabContent {
+            .contentSection {
+                background: var(--black3);
+                border-radius: 12px;
+                padding: 30px;
+                min-height: 400px;
+
+                h3 {
+                    color: white;
+                    font-size: 24px;
+                    font-weight: 600;
+                    margin: 0 0 10px 0;
+                }
+
+                p {
+                    color: rgba(255, 255, 255, 0.7);
+                    font-size: 16px;
+                    margin: 0 0 30px 0;
+                    line-height: 1.5;
+                }
+
+                .emptyState {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    padding: 60px 20px;
+                    color: rgba(255, 255, 255, 0.5);
+
+                    .emptyIcon {
+                        font-size: 48px;
+                        margin-bottom: 20px;
+                        color: var(--pink);
+                        opacity: 0.7;
+                    }
+
+                    h4 {
+                        color: white;
+                        font-size: 20px;
+                        font-weight: 600;
+                        margin: 0 0 10px 0;
+                    }
+
+                    p {
+                        color: rgba(255, 255, 255, 0.6);
+                        font-size: 14px;
+                        margin: 0;
+                        max-width: 300px;
+                    }
+                }
+
+                .loadingState {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    padding: 60px 20px;
+                    color: rgba(255, 255, 255, 0.7);
+
+                    .spinner {
+                        width: 40px;
+                        height: 40px;
+                        border: 3px solid rgba(255, 255, 255, 0.3);
+                        border-top: 3px solid var(--pink);
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                        margin-bottom: 20px;
+                    }
+
+                    p {
+                        font-size: 16px;
+                        margin: 0;
+                    }
+                }
+
+                .itemsGrid {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 20px;
+                    margin-top: 20px;
+
+                    .itemCard {
+                        background: var(--black2);
+                        border-radius: 12px;
+                        overflow: hidden;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            transform: translateY(-5px);
+                            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                        }
+
+                        .itemPoster {
+                            position: relative;
+                            aspect-ratio: 2/3;
+                            overflow: hidden;
+
+                            img {
+                                width: 100%;
+                                height: 100%;
+                                object-fit: cover;
+                                transition: transform 0.3s ease;
+                            }
+
+                            .itemOverlay {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                bottom: 0;
+                                background: rgba(0, 0, 0, 0.7);
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                gap: 15px;
+                                opacity: 0;
+                                transition: opacity 0.3s ease;
+
+                                .playBtn, .removeBtn {
+                                    background: rgba(255, 255, 255, 0.2);
+                                    border: none;
+                                    color: white;
+                                    width: 40px;
+                                    height: 40px;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    cursor: pointer;
+                                    transition: all 0.3s ease;
+
+                                    &:hover {
+                                        background: var(--pink);
+                                        transform: scale(1.1);
+                                    }
+                                }
+
+                                .removeBtn:hover {
+                                    background: #ff4757;
+                                }
+                            }
+
+                            &:hover {
+                                img {
+                                    transform: scale(1.1);
+                                }
+
+                                .itemOverlay {
+                                    opacity: 1;
+                                }
+                            }
+                        }
+
+                        .itemInfo {
+                            padding: 15px;
+
+                            h4 {
+                                color: white;
+                                font-size: 14px;
+                                font-weight: 600;
+                                margin: 0 0 5px 0;
+                                line-height: 1.3;
+                                display: -webkit-box;
+                                -webkit-line-clamp: 2;
+                                -webkit-box-orient: vertical;
+                                overflow: hidden;
+                            }
+
+                            p {
+                                color: rgba(255, 255, 255, 0.6);
+                                font-size: 12px;
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
+
+                .reviewsList {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 20px;
+                    margin-top: 20px;
+
+                    .reviewCard {
+                        background: var(--black2);
+                        border-radius: 12px;
+                        padding: 20px;
+                        transition: all 0.3s ease;
+
+                        &:hover {
+                            transform: translateY(-2px);
+                            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+                        }
+
+                        .reviewHeader {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            margin-bottom: 15px;
+
+                            .reviewMovie {
+                                display: flex;
+                                align-items: center;
+                                gap: 15px;
+
+                                img {
+                                    width: 60px;
+                                    height: 90px;
+                                    object-fit: cover;
+                                    border-radius: 8px;
+                                }
+
+                                .reviewMovieInfo {
+                                    h4 {
+                                        color: white;
+                                        font-size: 16px;
+                                        font-weight: 600;
+                                        margin: 0 0 5px 0;
+                                    }
+
+                                    p {
+                                        color: rgba(255, 255, 255, 0.6);
+                                        font-size: 14px;
+                                        margin: 0;
+                                    }
+                                }
+                            }
+
+                            .reviewActions {
+                              display: flex;
+                              gap: 10px;
+
+                              .editReviewBtn {
+                                background: rgba(33, 150, 243, 0.2);
+                                border: none;
+                                color: #2196F3;
+                                width: 35px;
+                                height: 35px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+
+                                &:hover {
+                                  background: #2196F3;
+                                  color: white;
+                                  transform: scale(1.1);
+                                }
+                              }
+
+                              .deleteReviewBtn {
+                                background: rgba(255, 71, 87, 0.2);
+                                border: none;
+                                color: #ff4757;
+                                width: 35px;
+                                height: 35px;
+                                border-radius: 50%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                cursor: pointer;
+                                transition: all 0.3s ease;
+
+                                &:hover {
+                                  background: #ff4757;
+                                  color: white;
+                                  transform: scale(1.1);
+                                }
+                              }
+                            }
+                        }
+
+                        .reviewContent {
+                            .reviewRating {
+                                display: flex;
+                                gap: 5px;
+                                margin-bottom: 10px;
+
+                                .filled {
+                                    color: #ffd700;
+                                }
+
+                                .empty {
+                                    color: rgba(255, 255, 255, 0.3);
+                                }
+                            }
+
+                            .reviewText {
+                                color: rgba(255, 255, 255, 0.8);
+                                font-size: 14px;
+                                line-height: 1.5;
+                                margin: 0 0 10px 0;
+                            }
+
+                            .reviewDate {
+                                color: rgba(255, 255, 255, 0.5);
+                                font-size: 12px;
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @include md {
+        padding-top: 100px;
+
+        .personalHeader {
+            margin-bottom: 40px;
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+
+        .personalContent {
+            .tabsContainer {
+                margin-bottom: 40px;
+
+                .tabs {
+                    .tab {
+                        padding: 10px 16px;
+                        font-size: 13px;
+
+                        svg {
+                            font-size: 14px;
+                        }
+                    }
+                }
+            }
+
+            .tabContent {
+                .contentSection {
+                    padding: 25px;
+                    min-height: 350px;
+
+                    h3 {
+                        font-size: 20px;
+                    }
+
+                    p {
+                        font-size: 14px;
+                    }
+
+                    .emptyState {
+                        padding: 40px 20px;
+
+                        .emptyIcon {
+                            font-size: 40px;
+                            margin-bottom: 15px;
+                        }
+
+                        h4 {
+                            font-size: 18px;
+                        }
+
+                        p {
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    @include sm {
+        padding-top: 80px;
+
+        .personalHeader {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 30px;
+
+            .backBtn {
+                padding: 8px 16px;
+                font-size: 13px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+        }
+
+        .personalContent {
+            .tabsContainer {
+                margin-bottom: 30px;
+
+                .tabs {
+                    flex-direction: column;
+                    width: 100%;
+
+                    .tab {
+                        justify-content: center;
+                        padding: 12px 16px;
+                    }
+                }
+            }
+
+            .tabContent {
+                .contentSection {
+                    padding: 20px;
+                    min-height: 300px;
+
+                    h3 {
+                        font-size: 18px;
+                    }
+
+                    .emptyState {
+                        padding: 30px 15px;
+
+                        .emptyIcon {
+                            font-size: 36px;
+                        }
+
+                        h4 {
+                            font-size: 16px;
+                        }
+
+                        p {
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

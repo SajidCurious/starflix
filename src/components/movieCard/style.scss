@@ -58,6 +58,80 @@
                 justify-content: flex-end;
             }
         }
+
+        .actionButtons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            z-index: 999;
+
+            .actionBtn {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1px solid #ffffff;
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                opacity: 1;
+                transform: translateY(0);
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+                font-weight: bold;
+
+                &:hover {
+                    transform: scale(1.1);
+                    opacity: 1;
+                    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.7);
+                }
+
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
+
+                svg {
+                    font-size: 10px;
+                }
+
+                &.favouriteBtn {
+                    background: rgba(255, 71, 87, 0.7);
+                    border-color: #ffffff;
+
+                    &.active {
+                        background: #ff4757;
+                        border-color: #ffffff;
+                        box-shadow: 0 0 15px rgba(255, 71, 87, 0.8);
+                    }
+
+                    &:hover:not(.active) {
+                        background: #ff4757;
+                        border-color: #ffffff;
+                    }
+                }
+
+                &.watchlistBtn {
+                    background: rgba(76, 175, 80, 0.7);
+                    border-color: #ffffff;
+
+                    &.active {
+                        background: #4CAF50;
+                        border-color: #ffffff;
+                        box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+                    }
+
+                    &:hover:not(.active) {
+                        background: #4CAF50;
+                        border-color: #ffffff;
+                    }
+                }
+            }
+        }
     }
     .textBlock {
         color: white;

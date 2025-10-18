@@ -1,0 +1,141 @@
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  min-width: 300px;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  transform: translateX(100%);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.show {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  &.hide {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+
+  .toastIcon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    flex-shrink: 0;
+    font-size: 14px;
+  }
+
+  .toastContent {
+    flex: 1;
+    
+    .toastMessage {
+      color: white;
+      font-size: 14px;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+
+  .toastClose {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 12px;
+
+    &:hover {
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  // Type-specific styles
+  &.success {
+    border-left: 4px solid #4CAF50;
+    
+    .toastIcon {
+      background: rgba(76, 175, 80, 0.2);
+      color: #4CAF50;
+    }
+  }
+
+  &.error {
+    border-left: 4px solid #f44336;
+    
+    .toastIcon {
+      background: rgba(244, 67, 54, 0.2);
+      color: #f44336;
+    }
+  }
+
+  &.warning {
+    border-left: 4px solid #ff9800;
+    
+    .toastIcon {
+      background: rgba(255, 152, 0, 0.2);
+      color: #ff9800;
+    }
+  }
+
+  &.favourite {
+    border-left: 4px solid #ff4757;
+    
+    .toastIcon {
+      background: rgba(255, 71, 87, 0.2);
+      color: #ff4757;
+    }
+  }
+
+  &.watchlist {
+    border-left: 4px solid #00ff00;
+    
+    .toastIcon {
+      background: rgba(0, 255, 0, 0.2);
+      color: #00ff00;
+    }
+  }
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  .toast {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    max-width: none;
+    transform: translateY(-100%);
+
+    &.show {
+      transform: translateY(0);
+    }
+
+    &.hide {
+      transform: translateY(-100%);
+    }
+  }
+}
+
+
+

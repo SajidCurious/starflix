@@ -1,0 +1,104 @@
+@import "../../mixins.scss";
+
+.reviewSection {
+  background: var(--black1);
+  padding: 40px 0;
+
+  .reviewHeader {
+    text-align: center;
+    margin-bottom: 30px;
+
+    h2 {
+      color: white;
+      font-size: 28px;
+      font-weight: 600;
+      margin: 0 0 10px 0;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 16px;
+      margin: 0 0 20px 0;
+    }
+
+    .writeReviewBtn {
+      background: var(--pink);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: #e91e63;
+        transform: translateY(-2px);
+      }
+    }
+
+    .reviewStatus {
+      p {
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 14px;
+        margin: 5px 0;
+        
+        &:first-child {
+          font-weight: 500;
+        }
+        
+        a {
+          color: var(--pink);
+          text-decoration: none;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  @include md {
+    padding: 30px 0;
+
+    .reviewHeader {
+      margin-bottom: 25px;
+
+      h2 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      .writeReviewBtn {
+        padding: 10px 25px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  @include sm {
+    padding: 20px 0;
+
+    .reviewHeader {
+      margin-bottom: 20px;
+
+      h2 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 13px;
+      }
+
+      .writeReviewBtn {
+        padding: 8px 20px;
+        font-size: 12px;
+      }
+    }
+  }
+}

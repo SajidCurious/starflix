@@ -1,0 +1,252 @@
+{
+  "info": {
+    "name": "Starflix API Collection",
+    "description": "Complete API collection for Starflix movie platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "firebase_user_123456789",
+      "type": "string"
+    },
+    {
+      "key": "movie_id",
+      "value": "550",
+      "type": "string"
+    },
+    {
+      "key": "review_id",
+      "value": "507f1f77bcf86cd799439013",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/health",
+          "host": ["{{base_url}}"],
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firebaseId\": \"{{user_id}}\",\n  \"email\": \"test@example.com\",\n  \"name\": \"Test User\",\n  \"avatar\": \"https://example.com/avatar.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user",
+              "host": ["{{base_url}}"],
+              "path": ["user"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Favourites",
+      "item": [
+        {
+          "name": "Get Favourites",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/favourites/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["favourites", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add to Favourites",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userData\": {\n    \"email\": \"test@example.com\",\n    \"name\": \"Test User\"\n  },\n  \"movieData\": {\n    \"id\": 550,\n    \"title\": \"Fight Club\",\n    \"poster_path\": \"/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg\",\n    \"backdrop_path\": \"/87hTDiay2N2qWyX4D7C5b7hUjF5.jpg\",\n    \"release_date\": \"1999-10-15\",\n    \"vote_average\": 8.433,\n    \"overview\": \"A ticking-time-bomb insomniac...\",\n    \"genre_ids\": [18],\n    \"media_type\": \"movie\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/favourites/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["favourites", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from Favourites",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/favourites/{{user_id}}/{{movie_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["favourites", "{{user_id}}", "{{movie_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Watchlist",
+      "item": [
+        {
+          "name": "Get Watchlist",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/watchlist/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["watchlist", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add to Watchlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userData\": {\n    \"email\": \"test@example.com\",\n    \"name\": \"Test User\"\n  },\n  \"movieData\": {\n    \"id\": 238,\n    \"title\": \"The Godfather\",\n    \"poster_path\": \"/3bhkrj58Vtu7enYsRolD1fZdja1.jpg\",\n    \"backdrop_path\": \"/tmU7GeKVybMWFButWEGl2M4GeiP.jpg\",\n    \"release_date\": \"1972-03-14\",\n    \"vote_average\": 8.7,\n    \"overview\": \"Spanning the years 1945 to 1955...\",\n    \"genre_ids\": [18, 80],\n    \"media_type\": \"movie\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/watchlist/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["watchlist", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove from Watchlist",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/watchlist/{{user_id}}/238",
+              "host": ["{{base_url}}"],
+              "path": ["watchlist", "{{user_id}}", "238"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Get Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userData\": {\n    \"email\": \"test@example.com\",\n    \"name\": \"Test User\"\n  },\n  \"reviewData\": {\n    \"movieId\": 550,\n    \"movieTitle\": \"Fight Club\",\n    \"moviePoster\": \"/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg\",\n    \"rating\": 5,\n    \"reviewText\": \"An absolute masterpiece! The plot twists are incredible.\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "{{user_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4,\n  \"reviewText\": \"Updated review text here.\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/{{user_id}}/{{review_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "{{user_id}}", "{{review_id}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/{{user_id}}/{{review_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["reviews", "{{user_id}}", "{{review_id}}"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

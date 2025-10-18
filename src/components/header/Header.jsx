@@ -2,12 +2,18 @@ import React, { useState, useEffect } from "react";
 import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
+import { FaUser } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { loginSuccess, logout } from "../../store/authSlice";
+import { authService } from "../../utils/authService";
 
 import "./style.scss";
 
 import logo from "../../assets/movix-logo.svg";
 import ContentWrapper from "../contentWrapper/ContentWrapper";
+import LoginModal from "../loginModal/LoginModal";
+import UserDropdown from "../userDropdown/UserDropdown";
 
 const Header = () => {
   const [show, setShow] = useState("top");
@@ -15,12 +21,40 @@ const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [query, setQuery] = useState("");
   const [showSearch, setShowSearch] = useState("");
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location]);
+
+  // Initialize authentication from Firebase
+  useEffect(() => {
+    const unsubscribe = authService.onAuthStateChanged((user) => {
+      if (user) {
+        // User is signed in
+        const userData = {
+          id: user.uid,
+          email: user.email,
+          name: user.displayName || user.email.split('@')[0],
+          avatar: user.photoURL || `https://ui-avatars.com/api/?name=${user.displayName || user.email.split('@')[0]}&background=random`,
+          loginMethod: 'firebase'
+        };
+        localStorage.setItem('starflix_user', JSON.stringify(userData));
+        dispatch(loginSuccess(userData));
+      } else {
+        // User is signed out
+        localStorage.removeItem('starflix_user');
+        dispatch(logout());
+      }
+    });
+
+    return () => unsubscribe();
+  }, [dispatch]);
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {
@@ -69,6 +103,22 @@ const Header = () => {
     setMobileMenu(false);
   };
 
+  const handleAccountClick = () => {
+    if (isAuthenticated) {
+      setShowUserDropdown(!showUserDropdown);
+    } else {
+      setShowLoginModal(true);
+    }
+  };
+
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
+  const closeUserDropdown = () => {
+    setShowUserDropdown(false);
+  };
+
   return (
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
       <ContentWrapper>
@@ -78,19 +128,35 @@ const Header = () => {
         >
           STARFLIX
         </div>
-        <ul className="menuItems">
-          <li className="menuItem" onClick={() => navigationHandler("movie")}>
-            Movies
-          </li>
-          <li className="menuItem" onClick={() => navigationHandler("tv")}>
-            TV Shows
-          </li>
-          <li className="menuItem">
-            <HiOutlineSearch onClick={openSearch} />
-          </li>
-        </ul>
+                <ul className="menuItems">
+                  <li className="menuItem" onClick={() => navigationHandler("movie")}>
+                    Movies
+                  </li>
+                  <li className="menuItem" onClick={() => navigationHandler("tv")}>
+                    TV Shows
+                  </li>
+                  <li className="menuItem">
+                    <HiOutlineSearch onClick={openSearch} />
+                  </li>
+                  <li className="menuItem accountItem">
+                    <div className="accountLogo" onClick={handleAccountClick}>
+                      {isAuthenticated ? (
+                        <img src={user?.avatar} alt={user?.name} className="userAvatar" />
+                      ) : (
+                        <FaUser className="accountIcon" />
+                      )}
+                    </div>
+                  </li>
+                </ul>
         <div className="mobileMenuItems">
           <HiOutlineSearch onClick={openSearch} />
+          <div className="accountLogo" onClick={handleAccountClick}>
+            {isAuthenticated ? (
+              <img src={user?.avatar} alt={user?.name} className="userAvatar" />
+            ) : (
+              <FaUser className="accountIcon" />
+            )}
+          </div>
           {mobileMenu ? (
             <VscChromeClose onClick={() => setMobileMenu(false)} />
           ) : (
@@ -112,6 +178,12 @@ const Header = () => {
             </div>
           </ContentWrapper>
         </div>
+      )}
+      
+      {/* Authentication Components */}
+      <LoginModal isOpen={showLoginModal} onClose={closeLoginModal} />
+      {showUserDropdown && (
+        <UserDropdown isOpen={showUserDropdown} onClose={closeUserDropdown} />
       )}
     </header>
   );
