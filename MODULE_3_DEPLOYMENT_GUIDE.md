@@ -340,7 +340,7 @@ app.listen(PORT, () => {
     "dotenv": "^16.3.1"
   },
   "engines": {
-    "node": "22.x",
+    "node": "18.x",
     "npm": ">=8.0.0"
   },
   "keywords": ["starflix", "api", "mongodb", "movies"],
