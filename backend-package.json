@@ -16,7 +16,7 @@
     "nodemon": "^3.0.1"
   },
   "engines": {
-    "node": "20.x"
+    "node": "18.x"
   },
   "keywords": ["starflix", "mongodb", "atlas", "api"],
   "author": "Starflix Team",
