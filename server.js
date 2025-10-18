@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB Atlas connection
-const MONGODB_URI = 'mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster';
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster';
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
