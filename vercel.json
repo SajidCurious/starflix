@@ -1,10 +1,15 @@
 {
-  "functions": {
-    "server.js": {
-      "runtime": "nodejs22.x"
+  "version": 2,
+  "builds": [
+    {
+      "src": "server.js",
+      "use": "@vercel/node@3.0.7"
     }
-  },
-  "buildCommand": "npm run build",
-  "outputDirectory": "dist",
-  "installCommand": "npm install"
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/server.js"
+    }
+  ]
 }
