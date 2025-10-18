@@ -15,6 +15,9 @@
   "devDependencies": {
     "nodemon": "^3.0.1"
   },
+  "engines": {
+    "node": "22.x"
+  },
   "keywords": ["starflix", "mongodb", "atlas", "api"],
   "author": "Starflix Team",
   "license": "MIT"
