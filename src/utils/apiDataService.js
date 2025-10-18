@@ -1,7 +1,9 @@
 // API Data Service for Starflix MongoDB Atlas integration
 // This service communicates with the backend API
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = process.env.NODE_ENV === 'production' 
+  ? '/api'  // Use relative URL for production (Vercel)
+  : 'http://localhost:5000/api';  // Use localhost for development
 
 export const apiDataService = {
   // Helper function to make API calls
