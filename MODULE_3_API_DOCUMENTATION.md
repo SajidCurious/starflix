@@ -3,10 +3,12 @@
 ## API Overview
 
 **Base URL:** `http://localhost:5000/api` (Development)  
-**Production URL:** `https://your-deployed-api.com/api`
+**Production URL:** `https://starflix9.vercel.app/api` (Vercel Deployment)
 
 **Authentication:** Firebase Authentication (JWT tokens)  
-**Content-Type:** `application/json`
+**Content-Type:** `application/json`  
+**Database:** MongoDB Atlas (NoSQL)  
+**Framework:** Node.js + Express.js
 
 ## API Endpoints
 
@@ -24,7 +26,9 @@ GET /api/health
 ```json
 {
   "status": "OK",
-  "message": "Starflix API is running!"
+  "message": "Starflix API is running!",
+  "environment": "development",
+  "timestamp": "2024-01-15T10:30:00.000Z"
 }
 ```
 
@@ -444,6 +448,25 @@ Currently no rate limiting implemented, but recommended for production:
 Current version: v1 (implicit)  
 Future versions will use URL path: `/api/v2/`
 
+## Environment Variables
+The API uses the following environment variables:
+```bash
+# MongoDB Atlas Configuration
+MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=AIzaSyD_Kjye43E69b-KMsM9jYcRNIvVzvbYv-o
+VITE_FIREBASE_AUTH_DOMAIN=starflix-auth.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=starflix-auth
+
+# TMDB API Configuration
+VITE_TMDB_API_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzczZTAyYTZlZDdmMDM0NzEzNzI5MDA3MWEwYzEyOSIsIm5iZiI6MTc1NzQ3MzQzMC4wMzMsInN1YiI6IjY4YzBlYTk2MDQ1OWUzN2YxNzFiZDg2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jTYzse9lXmqdCGDDu6aTHm5l1YMTb4QWx8WGDcFt7R0
+
+# Server Configuration
+PORT=5000
+NODE_ENV=development
+```
+
 ## Testing
 All endpoints have been tested with:
 - Valid data scenarios
@@ -451,4 +474,9 @@ All endpoints have been tested with:
 - Edge cases
 - Error conditions
 
-See `POSTMAN_TESTING.md` for detailed test results and screenshots.
+See `MODULE_3_POSTMAN_TESTING.md` for detailed test results and screenshots.
+
+## Deployment URLs
+- **Vercel:** `https://starflix9.vercel.app/api`
+- **Health Check:** `https://starflix9.vercel.app/api/health`
+

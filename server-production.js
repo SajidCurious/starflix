@@ -1,16 +1,11 @@
-// Backend server for Starflix MongoDB Atlas integration
+// Production-ready backend server for Starflix MongoDB Atlas integration
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // Load environment variables
 dotenv.config();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,7 +19,6 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:5173',
-      'https://starflix9.vercel.app',
       'https://starflix-frontend.vercel.app',
       'https://your-frontend-domain.com', // Replace with your actual frontend domain
       process.env.CORS_ORIGIN
@@ -45,6 +39,13 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Request logging middleware
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.url} - IP: ${req.ip}`);
+  next();
+});
 
 // MongoDB Atlas connection with enhanced error handling
 const MONGODB_URI = process.env.MONGODB_URI;
@@ -155,9 +156,16 @@ app.get('/api/health', (req, res) => {
 app.post('/api/user', async (req, res) => {
   try {
     const { firebaseId, email, name, avatar } = req.body;
+    
+    // Input validation
+    if (!firebaseId) {
+      return res.status(400).json({ success: false, error: 'Firebase ID is required' });
+    }
+    
     const user = await getOrCreateUser(firebaseId, { email, name, avatar });
     res.json({ success: true, user });
   } catch (error) {
+    console.error('User creation error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -186,6 +194,7 @@ app.get('/api/favourites/:userId', async (req, res) => {
 
     res.json({ success: true, favourites: movies });
   } catch (error) {
+    console.error('Get favourites error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -194,6 +203,11 @@ app.post('/api/favourites/:userId', async (req, res) => {
   try {
     const user = await getOrCreateUser(req.params.userId, req.body.userData || {});
     const movieData = req.body.movieData;
+
+    // Input validation
+    if (!movieData || !movieData.id) {
+      return res.status(400).json({ success: false, error: 'Movie data is required' });
+    }
 
     let favourites = await Favourites.findOne({ userId: user._id });
     
@@ -237,6 +251,7 @@ app.post('/api/favourites/:userId', async (req, res) => {
     await favourites.save();
     res.json({ success: true, message: 'Added to favourites' });
   } catch (error) {
+    console.error('Add to favourites error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -255,6 +270,7 @@ app.delete('/api/favourites/:userId/:movieId', async (req, res) => {
 
     res.json({ success: true, message: 'Removed from favourites' });
   } catch (error) {
+    console.error('Remove from favourites error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -283,6 +299,7 @@ app.get('/api/watchlist/:userId', async (req, res) => {
 
     res.json({ success: true, watchlist: movies });
   } catch (error) {
+    console.error('Get watchlist error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -291,6 +308,11 @@ app.post('/api/watchlist/:userId', async (req, res) => {
   try {
     const user = await getOrCreateUser(req.params.userId, req.body.userData || {});
     const movieData = req.body.movieData;
+
+    // Input validation
+    if (!movieData || !movieData.id) {
+      return res.status(400).json({ success: false, error: 'Movie data is required' });
+    }
 
     let watchlist = await Watchlist.findOne({ userId: user._id });
     
@@ -334,6 +356,7 @@ app.post('/api/watchlist/:userId', async (req, res) => {
     await watchlist.save();
     res.json({ success: true, message: 'Added to watchlist' });
   } catch (error) {
+    console.error('Add to watchlist error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -352,6 +375,7 @@ app.delete('/api/watchlist/:userId/:movieId', async (req, res) => {
 
     res.json({ success: true, message: 'Removed from watchlist' });
   } catch (error) {
+    console.error('Remove from watchlist error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -375,6 +399,7 @@ app.get('/api/reviews/:userId', async (req, res) => {
 
     res.json({ success: true, reviews: formattedReviews });
   } catch (error) {
+    console.error('Get reviews error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -383,6 +408,15 @@ app.post('/api/reviews/:userId', async (req, res) => {
   try {
     const user = await getOrCreateUser(req.params.userId, req.body.userData || {});
     const reviewData = req.body.reviewData;
+
+    // Input validation
+    if (!reviewData || !reviewData.movieId || !reviewData.rating) {
+      return res.status(400).json({ success: false, error: 'Review data is required' });
+    }
+
+    if (reviewData.rating < 1 || reviewData.rating > 5) {
+      return res.status(400).json({ success: false, error: 'Rating must be between 1 and 5' });
+    }
 
     const review = new Review({
       userId: user._id,
@@ -396,6 +430,7 @@ app.post('/api/reviews/:userId', async (req, res) => {
     await review.save();
     res.json({ success: true, review });
   } catch (error) {
+    console.error('Create review error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -406,6 +441,11 @@ app.put('/api/reviews/:userId/:reviewId', async (req, res) => {
     if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
     const { rating, reviewText } = req.body;
+    
+    // Input validation
+    if (rating && (rating < 1 || rating > 5)) {
+      return res.status(400).json({ success: false, error: 'Rating must be between 1 and 5' });
+    }
     
     const updatedReview = await Review.findOneAndUpdate(
       { _id: req.params.reviewId, userId: user._id },
@@ -423,6 +463,7 @@ app.put('/api/reviews/:userId/:reviewId', async (req, res) => {
 
     res.json({ success: true, review: updatedReview });
   } catch (error) {
+    console.error('Update review error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -432,9 +473,15 @@ app.delete('/api/reviews/:userId/:reviewId', async (req, res) => {
     const user = await User.findOne({ firebaseId: req.params.userId });
     if (!user) return res.status(404).json({ success: false, error: 'User not found' });
 
-    await Review.findOneAndDelete({ _id: req.params.reviewId, userId: user._id });
+    const deletedReview = await Review.findOneAndDelete({ _id: req.params.reviewId, userId: user._id });
+    
+    if (!deletedReview) {
+      return res.status(404).json({ success: false, error: 'Review not found' });
+    }
+
     res.json({ success: true, message: 'Review deleted' });
   } catch (error) {
+    console.error('Delete review error:', error);
     res.status(500).json({ success: false, error: error.message });
   }
 });
@@ -493,5 +540,5 @@ app.listen(PORT, () => {
   console.log(`📊 MongoDB: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Connecting...'}`);
 });
 
-// Export for Vercel
+// Export for testing
 export default app;

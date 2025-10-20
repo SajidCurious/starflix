@@ -3,7 +3,7 @@
 
 const API_BASE_URL = window.location.hostname === 'localhost' 
   ? 'http://localhost:5000/api'  // Use localhost for development
-  : '/api';  // Use relative URL for production (Vercel)
+  : 'https://starflix9.vercel.app/api';  // Use production Vercel URL
 
 export const apiDataService = {
   // Helper function to make API calls

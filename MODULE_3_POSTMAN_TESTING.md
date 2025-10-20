@@ -3,17 +3,25 @@
 ## Postman Collection Setup
 
 ### Collection Overview
-This collection contains all API endpoints for the Starflix application, organized by functionality.
+This collection contains all API endpoints for the Starflix application, organized by functionality. The collection is available as `Starflix_API_Collection.postman_collection.json` in the project root.
 
 ### Environment Variables
 Create a Postman environment with the following variables:
 
 ```
 base_url: http://localhost:5000/api
+production_url: https://starflix9.vercel.app/api
 user_id: firebase_user_123456789
 movie_id: 550
 review_id: 507f1f77bcf86cd799439013
 ```
+
+### Current Project Configuration
+- **Framework:** Node.js + Express.js
+- **Database:** MongoDB Atlas
+- **Authentication:** Firebase Auth
+- **Deployment:** Vercel
+- **External API:** TMDB (The Movie Database)
 
 ## API Testing Results
 
@@ -29,7 +37,9 @@ GET {{base_url}}/health
 ```json
 {
   "status": "OK",
-  "message": "Starflix API is running!"
+  "message": "Starflix API is running!",
+  "environment": "development",
+  "timestamp": "2024-01-15T10:30:00.000Z"
 }
 ```
 
@@ -533,11 +543,39 @@ Content-Type: application/json
 
 ## Postman Collection Export
 
-The complete Postman collection can be exported and imported into any Postman instance. The collection includes:
-- All API endpoints
-- Environment variables
-- Test scripts
-- Assertions
-- Documentation
+The complete Postman collection is available as `Starflix_API_Collection.postman_collection.json` in the project root. The collection includes:
+- All API endpoints (12 total)
+- Environment variables for local and production
+- Test scripts and assertions
+- Comprehensive documentation
+- Error handling test cases
+
+### Collection Structure
+```
+Starflix API Collection
+├── Health Check
+├── User Management
+│   └── Create User
+├── Favourites
+│   ├── Get Favourites
+│   ├── Add to Favourites
+│   └── Remove from Favourites
+├── Watchlist
+│   ├── Get Watchlist
+│   ├── Add to Watchlist
+│   └── Remove from Watchlist
+└── Reviews
+    ├── Get Reviews
+    ├── Create Review
+    ├── Update Review
+    └── Delete Review
+```
+
+### Production Testing
+The API has been tested on the production deployment:
+- **Production URL:** `https://starflix9.vercel.app/api`
+- **Health Check:** `https://starflix9.vercel.app/api/health`
+- **All endpoints verified working in production environment**
 
 This comprehensive testing ensures the Starflix API is production-ready and secure.
+

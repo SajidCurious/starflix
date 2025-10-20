@@ -6,16 +6,18 @@ This guide covers deploying the Starflix API to various cloud platforms. The API
 
 ## Deployment Options
 
-### 1. Render (Recommended for Free Tier)
+### 1. Vercel (Currently Deployed)
 
-**Why Render?**
+**Why Vercel?**
 - Free tier available
 - Automatic deployments from GitHub
 - Built-in environment variable management
 - Easy MongoDB Atlas integration
 - Automatic HTTPS
+- Serverless functions support
+- Global CDN
 
-#### Step-by-Step Deployment to Render
+#### Step-by-Step Deployment to Vercel
 
 1. **Prepare Your Repository**
    ```bash
@@ -25,35 +27,34 @@ This guide covers deploying the Starflix API to various cloud platforms. The API
    git push origin main
    ```
 
-2. **Create Render Account**
-   - Go to [render.com](https://render.com)
+2. **Create Vercel Account**
+   - Go to [vercel.com](https://vercel.com)
    - Sign up with GitHub account
 
-3. **Create New Web Service**
-   - Click "New +" → "Web Service"
-   - Connect your GitHub repository
+3. **Import Project**
+   - Click "New Project"
+   - Import your GitHub repository
    - Select the repository containing your API
 
-4. **Configure Service Settings**
+4. **Configure Project Settings**
    ```
-   Name: starflix-api
-   Environment: Node
+   Framework Preset: Other
    Build Command: npm install
-   Start Command: node server.js
+   Output Directory: ./
+   Install Command: npm install
    ```
 
 5. **Set Environment Variables**
    ```
    MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
    NODE_ENV=production
-   PORT=10000
-   CORS_ORIGIN=https://your-frontend-domain.com
+   PORT=5000
    ```
 
 6. **Deploy**
-   - Click "Create Web Service"
+   - Click "Deploy"
    - Wait for deployment to complete
-   - Your API will be available at: `https://starflix-api.onrender.com`
+   - Your API will be available at: `https://starflix-api.vercel.app`
 
 ### 2. Heroku Deployment
 
@@ -88,45 +89,41 @@ npm install -g heroku
    heroku open
    ```
 
-### 3. Vercel Deployment
+### 3. Render Deployment
 
 #### Prerequisites
 ```bash
- npm install -g vercel
+# No additional CLI tools required
 ```
 
 #### Deployment Steps
 
-1. **Create vercel.json**
-   ```json
-   {
-     "version": 2,
-     "builds": [
-       {
-         "src": "server.js",
-         "use": "@vercel/node"
-       }
-     ],
-     "routes": [
-       {
-         "src": "/(.*)",
-         "dest": "server.js"
-       }
-     ]
-   }
+1. **Create Render Account**
+   - Go to [render.com](https://render.com)
+   - Sign up with GitHub account
+
+2. **Create New Web Service**
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
+
+3. **Configure Settings**
+   ```
+   Name: starflix-api
+   Environment: Node
+   Build Command: npm install
+   Start Command: node server.js
    ```
 
-2. **Deploy**
-   ```bash
-   vercel --prod
+4. **Set Environment Variables**
+   ```
+   MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
+   NODE_ENV=production
+   PORT=10000
    ```
 
-3. **Set Environment Variables**
-   ```bash
-   vercel env add MONGODB_URI
-   vercel env add NODE_ENV production
-   vercel env add CORS_ORIGIN
-   ```
+5. **Deploy**
+   - Click "Create Web Service"
+   - Wait for deployment to complete
 
 ### 4. Railway Deployment
 
@@ -451,17 +448,15 @@ node --max-old-space-size=4096 server.js
 
 ## Deployment URLs
 
-### Render Deployment
-- **URL:** `https://starflix-api.onrender.com`
-- **Health Check:** `https://starflix-api.onrender.com/api/health`
-
-### Heroku Deployment
-- **URL:** `https://starflix-api.herokuapp.com`
-- **Health Check:** `https://starflix-api.herokuapp.com/api/health`
-
-### Vercel Deployment
-- **URL:** `https://starflix-api.vercel.app`
+### Current Production Deployment
+- **Vercel:** `https://starflix-api.vercel.app`
 - **Health Check:** `https://starflix-api.vercel.app/api/health`
+- **Status:** ✅ Active and Running
+
+### Alternative Deployment Options
+- **Render:** `https://starflix-api.onrender.com` (if deployed)
+- **Heroku:** `https://starflix-api.herokuapp.com` (if deployed)
+- **Railway:** `https://starflix-api.railway.app` (if deployed)
 
 ## Security Considerations for Production
 

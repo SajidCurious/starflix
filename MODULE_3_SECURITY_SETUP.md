@@ -4,30 +4,31 @@
 
 ### .env File Setup
 
-Create a `.env` file in your project root with the following variables:
+Create a `.env` file in your project root with the following variables (based on current project configuration):
 
 ```bash
-# Database Configuration
+# MongoDB Atlas Configuration
 MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=AIzaSyD_Kjye43E69b-KMsM9jYcRNIvVzvbYv-o
+VITE_FIREBASE_AUTH_DOMAIN=starflix-auth.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=starflix-auth
+VITE_FIREBASE_STORAGE_BUCKET=starflix-auth.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=724390243085
+VITE_FIREBASE_APP_ID=1:724390243085:web:e17160297d357e44449e44
+VITE_FIREBASE_MEASUREMENT_ID=G-EJ741SXGBN
+
+# TMDB API Configuration
+VITE_TMDB_API_TOKEN=eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIxNzczZTAyYTZlZDdmMDM0NzEzNzI5MDA3MWEwYzEyOSIsIm5iZiI6MTc1NzQ3MzQzMC4wMzMsInN1YiI6IjY4YzBlYTk2MDQ1OWUzN2YxNzFiZDg2ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.jTYzse9lXmqdCGDDu6aTHm5l1YMTb4QWx8WGDcFt7R0
 
 # Server Configuration
 PORT=5000
 NODE_ENV=development
 
-# Firebase Configuration (if using Firebase Auth)
-FIREBASE_API_KEY=your_firebase_api_key
-FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_STORAGE_BUCKET=your_project.appspot.com
-FIREBASE_MESSAGING_SENDER_ID=123456789
-FIREBASE_APP_ID=1:123456789:web:abcdef123456
-
-# Security Configuration
-JWT_SECRET=your_super_secret_jwt_key_here
-CORS_ORIGIN=http://localhost:3000
-
-# API Keys (if using external services)
-TMDB_API_KEY=your_tmdb_api_key
+# Additional Configuration
+VITE_APP_NAME=Starflix
+VITE_APP_VERSION=1.0.0
 ```
 
 ### Environment-Specific Configurations
@@ -36,16 +37,16 @@ TMDB_API_KEY=your_tmdb_api_key
 ```bash
 NODE_ENV=development
 PORT=5000
-MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix-dev?retryWrites=true&w=majority&appName=Starflix-cluster
-CORS_ORIGIN=http://localhost:3000
+MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
+CORS_ORIGIN=http://localhost:5173
 ```
 
 #### Production Environment (.env.production)
 ```bash
 NODE_ENV=production
 PORT=5000
-MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix-prod?retryWrites=true&w=majority&appName=Starflix-cluster
-CORS_ORIGIN=https://your-domain.com
+MONGODB_URI=mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster
+CORS_ORIGIN=https://starflix-api.vercel.app
 ```
 
 ## Security Implementation
@@ -64,8 +65,8 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:5173',
-      'https://your-domain.com',
-      'https://your-staging-domain.com'
+      'https://starflix-api.vercel.app',
+      'https://starflix-frontend.vercel.app'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
@@ -384,3 +385,4 @@ app.listen(PORT, () => {
 - [ ] Set up security headers
 
 This security setup provides a robust foundation for the Starflix API while maintaining ease of development and deployment.
+
