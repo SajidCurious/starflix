@@ -85,7 +85,7 @@ const Personal = () => {
   const handleDeleteReview = async (reviewId) => {
     try {
       await apiDataService.deleteReview(user.id, reviewId);
-      setReviews(prev => prev.filter(item => item.id !== reviewId));
+      setReviews(prev => prev.filter(item => (item._id || item.id) !== reviewId));
     } catch (error) {
       console.error('Error deleting review:', error);
     }
@@ -296,7 +296,7 @@ const Personal = () => {
                           />
                         )}
                         {reviews.map((review) => (
-                          <div key={review.id} className="reviewCard">
+                          <div key={review._id || review.id} className="reviewCard">
                             <div className="reviewHeader">
                               <div 
                                 className="reviewMovie"
@@ -327,7 +327,7 @@ const Personal = () => {
                                   className="deleteReviewBtn"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleDeleteReview(review.id);
+                                    handleDeleteReview(review._id || review.id);
                                   }}
                                   title="Delete review"
                                 >

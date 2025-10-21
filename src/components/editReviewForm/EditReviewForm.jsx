@@ -33,7 +33,7 @@ const EditReviewForm = ({ review, userFirebaseId, onReviewUpdated, onClose }) =>
         reviewText: reviewText.trim()
       };
 
-      await apiDataService.updateReview(userFirebaseId, review.id, reviewData);
+      await apiDataService.updateReview(userFirebaseId, review._id || review.id, reviewData);
       
       showSuccess(`⭐ Review updated successfully!`);
       
