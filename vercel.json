@@ -26,13 +26,5 @@
       "src": "/(.*)",
       "dest": "/index.html"
     }
-  ],
-  "functions": {
-    "server.js": {
-      "env": {
-        "MONGODB_URI": "mongodb+srv://starflix-user:Sajid911055@starflix-cluster.gzuicbu.mongodb.net/starflix?retryWrites=true&w=majority&appName=Starflix-cluster",
-        "NODE_ENV": "production"
-      }
-    }
-  }
+  ]
 }
