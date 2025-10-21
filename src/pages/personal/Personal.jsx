@@ -67,7 +67,7 @@ const Personal = () => {
   const handleRemoveFromWatchlist = async (movieId) => {
     try {
       await apiDataService.removeFromWatchlist(user.id, movieId);
-      setWatchlist(prev => prev.filter(item => item.id !== movieId));
+      setWatchlist(prev => prev.filter(item => item.movieId !== movieId));
     } catch (error) {
       console.error('Error removing from watchlist:', error);
     }
@@ -76,7 +76,7 @@ const Personal = () => {
   const handleRemoveFromFavourites = async (movieId) => {
     try {
       await apiDataService.removeFromFavourites(user.id, movieId);
-      setFavourites(prev => prev.filter(item => item.id !== movieId));
+      setFavourites(prev => prev.filter(item => item.movieId !== movieId));
     } catch (error) {
       console.error('Error removing from favourites:', error);
     }
@@ -133,9 +133,9 @@ const Personal = () => {
                       <div className="itemsGrid">
                         {watchlist.map((item) => (
                           <div 
-                            key={item.id} 
+                            key={item.movieId} 
                             className="itemCard"
-                            onClick={() => navigate(`/${item.media_type || 'movie'}/${item.id}`)}
+                            onClick={() => navigate(`/${item.media_type || 'movie'}/${item.movieId}`)}
                             style={{ cursor: 'pointer' }}
                           >
                             <div className="itemPoster">
@@ -148,7 +148,7 @@ const Personal = () => {
                                 className="deleteBtn"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleRemoveFromWatchlist(item.id);
+                                  handleRemoveFromWatchlist(item.movieId);
                                 }}
                                 style={{
                                   position: 'absolute',
@@ -211,9 +211,9 @@ const Personal = () => {
                       <div className="itemsGrid">
                         {favourites.map((item) => (
                           <div 
-                            key={item.id} 
+                            key={item.movieId} 
                             className="itemCard"
-                            onClick={() => navigate(`/${item.media_type || 'movie'}/${item.id}`)}
+                            onClick={() => navigate(`/${item.media_type || 'movie'}/${item.movieId}`)}
                             style={{ cursor: 'pointer' }}
                           >
                             <div className="itemPoster">
@@ -226,7 +226,7 @@ const Personal = () => {
                                 className="deleteBtn"
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  handleRemoveFromFavourites(item.id);
+                                  handleRemoveFromFavourites(item.movieId);
                                 }}
                                 style={{
                                   position: 'absolute',
