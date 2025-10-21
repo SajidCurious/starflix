@@ -7,17 +7,9 @@
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "server-minimal.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/server-minimal.js"
-    },
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
