@@ -7,9 +7,25 @@
       "config": {
         "distDir": "dist"
       }
+    },
+    {
+      "src": "api.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "test-api.js",
+      "use": "@vercel/node"
     }
   ],
   "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "/api.js"
+    },
+    {
+      "src": "/test-api",
+      "dest": "/test-api.js"
+    },
     {
       "src": "/assets/(.*)",
       "dest": "/assets/$1"
