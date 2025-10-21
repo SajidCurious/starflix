@@ -49,8 +49,13 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 // MongoDB Atlas connection with enhanced error handling
 const MONGODB_URI = process.env.MONGODB_URI;
 
+console.log('🔍 Environment check:');
+console.log('NODE_ENV:', process.env.NODE_ENV);
+console.log('MONGODB_URI:', MONGODB_URI ? 'Set' : 'Not set');
+
 if (!MONGODB_URI) {
   console.error('❌ MONGODB_URI environment variable is not set');
+  console.error('Available env vars:', Object.keys(process.env).filter(key => key.includes('MONGO')));
   process.exit(1);
 }
 
@@ -141,14 +146,24 @@ async function getOrCreateUser(firebaseId, userData) {
 
 // Health check endpoint with enhanced information
 app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'OK', 
-    message: 'Starflix API is running!',
-    environment: process.env.NODE_ENV || 'development',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'
-  });
+  try {
+    res.json({ 
+      status: 'OK', 
+      message: 'Starflix API is running!',
+      environment: process.env.NODE_ENV || 'development',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+      mongodbUri: process.env.MONGODB_URI ? 'Set' : 'Not set'
+    });
+  } catch (error) {
+    console.error('Health check error:', error);
+    res.status(500).json({ 
+      status: 'ERROR', 
+      message: 'Health check failed',
+      error: error.message 
+    });
+  }
 });
 
 // User routes
