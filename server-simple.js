@@ -5,8 +5,35 @@ import cors from 'cors';
 
 const app = express();
 
-// Basic middleware
-app.use(cors());
+// CORS configuration for Vercel
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:5173',
+      'https://starflix9.vercel.app',
+      'https://starflix-frontend.vercel.app',
+      'https://starflix-j50x0y783-sajidcurious-projects.vercel.app', // Your current Vercel preview URL
+      'https://starflix.vercel.app', // Your main Vercel URL
+      process.env.CORS_ORIGIN
+    ].filter(Boolean);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+};
+
+// Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // MongoDB connection with fallback
