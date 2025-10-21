@@ -144,8 +144,18 @@ export default async function handler(req, res) {
           movie: movieData
         });
       } else if (req.method === 'DELETE') {
-        // Remove from favourites
-        const movieId = parseInt(pathname.split('/').pop());
+        // Handle both formats: /api/favourites/{firebaseId}/{movieId} and /api/favourites/{firebaseId}
+        const pathParts = pathname.split('/');
+        let movieId;
+        
+        if (pathParts.length === 5) {
+          // Format: /api/favourites/{firebaseId}/{movieId}
+          movieId = parseInt(pathParts[4]);
+        } else {
+          // Format: /api/favourites/{firebaseId} - get movieId from query params
+          movieId = parseInt(req.query.movieId);
+        }
+        
         console.log('🗑️ Removing from favourites:', movieId);
         
         const user = await User.findOne({ firebaseId });
@@ -229,7 +239,18 @@ export default async function handler(req, res) {
           movie: movieData
         });
       } else if (req.method === 'DELETE') {
-        const movieId = parseInt(pathname.split('/').pop());
+        // Handle both formats: /api/watchlist/{firebaseId}/{movieId} and /api/watchlist/{firebaseId}
+        const pathParts = pathname.split('/');
+        let movieId;
+        
+        if (pathParts.length === 5) {
+          // Format: /api/watchlist/{firebaseId}/{movieId}
+          movieId = parseInt(pathParts[4]);
+        } else {
+          // Format: /api/watchlist/{firebaseId} - get movieId from query params
+          movieId = parseInt(req.query.movieId);
+        }
+        
         console.log('🗑️ Removing from watchlist:', movieId);
         
         const user = await User.findOne({ firebaseId });
