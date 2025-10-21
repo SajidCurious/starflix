@@ -151,3 +151,4 @@ Your favourites and watchlist will now be stored in Supabase cloud database! ğŸš
 
 
 
+
