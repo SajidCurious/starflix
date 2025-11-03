@@ -216,3 +216,4 @@
 This schema design provides a robust foundation for the Starflix application, supporting user management, personalization features, and social interactions while maintaining data integrity and optimal performance.
 
 
+
