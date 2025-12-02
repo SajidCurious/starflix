@@ -49,7 +49,24 @@ export default async function handler(req, res) {
   
   try {
     // Route handling
-    if (pathname === '/api/health') {
+    if (pathname === '/api' || pathname === '/api/') {
+      // API root endpoint - return API information
+      res.status(200).json({
+        status: 'OK',
+        message: 'Starflix API is running!',
+        version: '1.0.0',
+        timestamp: new Date().toISOString(),
+        mongodb: isConnected ? 'Connected' : 'Disconnected',
+        endpoints: {
+          health: '/api/health',
+          user: '/api/user (POST)',
+          favourites: '/api/favourites/:userId',
+          watchlist: '/api/watchlist/:userId',
+          reviews: '/api/reviews/:userId'
+        },
+        documentation: 'Visit /api/health for health check'
+      });
+    } else if (pathname === '/api/health') {
       res.status(200).json({
         status: 'OK',
         message: 'Starflix API is working!',
