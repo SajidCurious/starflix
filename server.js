@@ -26,7 +26,7 @@ const corsOptions = {
       'http://localhost:5173',
       'https://starflix9.vercel.app',
       'https://starflix-frontend.vercel.app',
-      'https://your-frontend-domain.com', // Replace with your actual frontend domain
+      'https://your-frontend-domain.com', 
       process.env.CORS_ORIGIN
     ].filter(Boolean);
     
